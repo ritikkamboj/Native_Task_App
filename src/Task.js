@@ -8,6 +8,7 @@ import {
     FlatList,
 } from "react-native";
 import React, { useState } from "react";
+import TaskItem from "./components/TaskItem";
 
 const Task = () => {
     const [task, setTask] = useState("");
@@ -48,9 +49,10 @@ const Task = () => {
                         data={taskList}
                         renderItem={({ item, index }) => {
                             return (
-                                <Text style={styles.taskItem}>
-                                    {index + 1}: {item}
-                                </Text>
+                                // <Text style={styles.taskItem}>
+                                //     {index + 1}: {item}
+                                // </Text>
+                                <TaskItem item={item} index={index} />
                             );
                         }}
                         keyExtractor={(item, index) => { return index }}
