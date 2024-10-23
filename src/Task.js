@@ -1,4 +1,12 @@
-import { View, Text, TextInput, Button, StyleSheet, ScrollView } from "react-native";
+import {
+    View,
+    Text,
+    TextInput,
+    Button,
+    StyleSheet,
+    ScrollView,
+    FlatList,
+} from "react-native";
 import React, { useState } from "react";
 
 const Task = () => {
@@ -18,7 +26,7 @@ const Task = () => {
         setTaskList((prevList) => {
             return [...prevList, task];
             alert("task Added");
-            setTask('');
+            setTask("");
         });
     };
     return (
@@ -34,14 +42,26 @@ const Task = () => {
             <View>
                 <Text style={styles.border}></Text>
                 <Text style={styles.textTitle}>Your Tasks : </Text>
-                <View >
-                    <ScrollView>
-                        {
-                            taskList.map((item, index) => (<Text style={styles.taskItem} key={index}>{item}</Text>))
-                        }
-                    </ScrollView>
+                <View>
+                    {/* <ScrollView> */}
+                    <FlatList
+                        data={taskList}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <Text style={styles.taskItem}>
+                                    {index + 1}: {item}
+                                </Text>
+                            );
+                        }}
+                        keyExtractor={(item, index) => { return index }}
+                    />
+                    {/* {taskList.map((item, index) => (
+              <Text style={styles.taskItem} key={index}>
+                {item}
+              </Text>
+            ))} */}
+                    {/* </ScrollView> */}
                 </View>
-
             </View>
         </View>
     );
@@ -75,13 +95,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         color: "#cccccc",
     },
-    taskItem:
-    {
+    taskItem: {
         margin: 10,
         padding: 20,
         borderRadius: 20,
         backgroundColor: "green",
-        color: "white"
-    }
+        color: "white",
+    },
 });
 export default Task;
