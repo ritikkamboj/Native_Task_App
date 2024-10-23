@@ -9,40 +9,26 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import TaskItem from "./components/TaskItem";
+import AddTask from "./components/AddTask";
 
 const Task = () => {
-    const [task, setTask] = useState("");
-
     const [taskList, setTaskList] = useState([]);
 
     // handle input values
 
-    const handleInputValue = (input) => {
-        setTask(input);
-    };
-
     //  handling button funcntioning
 
-    const handleAddButton = () => {
-        setTaskList((prevList) => {
-            return [...prevList, task];
-            alert("task Added");
-            setTask("");
-        });
-    };
     return (
         <View style={styles.container}>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    onChangeText={handleInputValue}
-                    style={styles.inputBox}
-                    placeholder="Add Your Tasks"
-                />
-                <Button onPress={handleAddButton} title="Add your task" />
-            </View>
+            <AddTask setTaskList={setTaskList} />
+
             <View>
                 <Text style={styles.border}></Text>
-                <Text style={styles.textTitle}>Your Tasks : </Text>
+                {taskList.length > 0 ? (
+                    <Text style={styles.textTitle}>Your Tasks : </Text>
+                ) : (
+                    <Text style={styles.textTitle}>No Tasks: </Text>
+                )}
                 <View>
                     {/* <ScrollView> */}
                     <FlatList
@@ -55,7 +41,9 @@ const Task = () => {
                                 <TaskItem item={item} index={index} />
                             );
                         }}
-                        keyExtractor={(item, index) => { return index }}
+                        keyExtractor={(item, index) => {
+                            return index;
+                        }}
                     />
                     {/* {taskList.map((item, index) => (
               <Text style={styles.taskItem} key={index}>
@@ -74,19 +62,7 @@ const styles = StyleSheet.create({
         paddingTop: 50,
         paddingHorizontal: 15,
     },
-    inputContainer: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    inputBox: {
-        width: "60%",
-        borderWidth: 1,
-        borderColor: "#cccCCC",
-        borderRadius: 10,
-        padding: 5,
-        paddingLeft: 15,
-    },
+
     textTitle: {
         fontSize: 26,
         fontWeight: "bold",
