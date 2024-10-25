@@ -1,13 +1,15 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 
-const TaskItem = ({ item, index }) => {
+const TaskItem = ({ item, index, handleDelete }) => {
     return (
-        <View>
-            <Text style={styles.taskItem}>
-                {index + 1}: {item}
-            </Text>
-        </View>
+        <Pressable onPress={handleDelete.bind(this, item.id)}>
+            <View>
+                <Text style={styles.taskItem}>
+                    {index + 1}: {item.task}
+                </Text>
+            </View>
+        </Pressable>
     )
 }
 

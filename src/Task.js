@@ -18,6 +18,14 @@ const Task = () => {
 
     //  handling button funcntioning
 
+    //handle Delete
+
+    const handleDelete = (id) => {
+        console.log("jai shree ram");
+
+        setTaskList((currentList) => currentList.filter((t) => t.id !== id));
+    };
+
     return (
         <View style={styles.container}>
             <AddTask setTaskList={setTaskList} />
@@ -38,7 +46,12 @@ const Task = () => {
                                 // <Text style={styles.taskItem}>
                                 //     {index + 1}: {item}
                                 // </Text>
-                                <TaskItem item={item} index={index} />
+                                <TaskItem
+                                    handleDelete={handleDelete}
+
+                                    item={item}
+                                    index={index}
+                                />
                             );
                         }}
                         keyExtractor={(item, index) => {

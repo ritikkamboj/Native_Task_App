@@ -14,7 +14,7 @@ const AddTask = ({ setTaskList }) => {
             return Alert.alert("Please Add any Task")
         }
         setTaskList((prevList) => {
-            return [...prevList, task];
+            return [...prevList, { task: task, id: (Math.random() * 100000).toString() }];
             alert("task Added");
             setTask("");
         });
