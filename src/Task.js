@@ -8,10 +8,12 @@ import {
     FlatList,
 } from "react-native";
 import React, { useState } from "react";
-import TaskItem from "./components/TaskItem";
+
 import AddTask from "./components/AddTask";
+import TaskItem from "./components/TaskItem";
 
 const Task = () => {
+    const [showModal, setShowModal] = useState(false);
     const [taskList, setTaskList] = useState([]);
 
     // handle input values
@@ -26,10 +28,20 @@ const Task = () => {
         setTaskList((currentList) => currentList.filter((t) => t.id !== id));
     };
 
+    const handleModal = () => {
+        setShowModal(true);
+    };
+
+    const handleHideModal = () => {
+        setShowModal(false)
+
+    }
+
     return (
         <View style={styles.container}>
-            <AddTask setTaskList={setTaskList} />
-
+            {showModal && <AddTask handleHideModal={handleHideModal} setTaskList={setTaskList} />
+            }
+            <Button title="ADD TASK" onPress={handleModal} />
             <View>
                 <Text style={styles.border}></Text>
                 {taskList.length > 0 ? (
@@ -48,7 +60,6 @@ const Task = () => {
                                 // </Text>
                                 <TaskItem
                                     handleDelete={handleDelete}
-
                                     item={item}
                                     index={index}
                                 />

@@ -1,8 +1,15 @@
-import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    Button,
+    Alert,
+    Modal,
+} from "react-native";
 import React, { useState } from "react";
 
-const AddTask = ({ setTaskList }) => {
-
+const AddTask = ({ setTaskList, handleHideModal }) => {
     const [task, setTask] = useState("");
 
     const handleInputValue = (input) => {
@@ -11,29 +18,45 @@ const AddTask = ({ setTaskList }) => {
 
     const handleAddButton = () => {
         if (!task) {
-            return Alert.alert("Please Add any Task")
+            return Alert.alert("Please Add any Task");
         }
         setTaskList((prevList) => {
-            return [...prevList, { task: task, id: (Math.random() * 100000).toString() }];
+            return [
+                ...prevList,
+                { task: task, id: (Math.random() * 100000).toString() },
+            ];
             alert("task Added");
             setTask("");
+
         });
+        handleHideModal();
     };
     return (
-        <View style={styles.inputContainer}>
-            <TextInput
-                onChangeText={handleInputValue}
-                style={styles.inputBox}
-                placeholder="Add Your Tasks"
-            />
-            <Button onPress={handleAddButton} title="Add your task" />
-        </View>
+        <Modal animationType="slide">
+            <View style={styles.inputContainer}>
+                <TextInput
+                    onChangeText={handleInputValue}
+                    style={styles.inputBox}
+                    placeholder="Add Your Tasks"
+                />
+                <View style={styles.btnGroup}>
+                    <View style={styles.btn}>
+
+                        <Button onPress={handleAddButton} title="Add your task" />
+                    </View>
+                    <View style={styles.btn} >
+                        <Button title="CANCEL" onPress={handleHideModal} />
+                    </View>
+                </View>
+            </View>
+        </Modal>
     );
 };
 const styles = StyleSheet.create({
     inputContainer: {
-        flexDirection: "row",
-        justifyContent: "space-between",
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
     },
     inputBox: {
@@ -44,6 +67,17 @@ const styles = StyleSheet.create({
         padding: 5,
         paddingLeft: 15,
     },
+    btnGroup:
+    {
+        flexDirection: "row",
+        marginTop: 20
+    },
+    btn:
+    {
+        width: "40%",
+        marginHorizontal: 20
+
+    }
 });
 
 export default AddTask;
